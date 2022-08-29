@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% block title %}Shows{% endblock %}
+{% block content %}
+    <h1 class="title text-center">Shows</h1>
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Year</td>
+                    <td>Runtime (min)</td>
+                    <td>Rating</td>
+                    <td>Genres</td>
+                    <td>Trailer</td>
+                    <td>Homepage</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for show in show_data %}
+                    <tr>
+                        <td><a href="{{ url_for('display_show', id=show['id']) }}">{{ show['title'] }}</a></td>
+                        <td>{{ show['year'] }}</td>
+                        <td>{{ show['runtime'] }}</td>
+                        <td>{{ show['rating'] }}</td>
+                        <td>{{ show['genres'] }}</td>
+                        <td>{% if show['trailer'] %}
+                            <a href="{{ show['trailer'] }}" target="_blank">{{ show['trailer'] }}</a>
+                            {% else %}
+                            No URL
+                            {% endif %}
+                        </td>
+                        <td>{% if show['homepage'] %}
+                            <a href="{{ show['homepage'] }}">{{ show['homepage'] }}</a>
+                            {% else %}
+                            No URL
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
