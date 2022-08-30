@@ -1,0 +1,12 @@
+.show-pagination {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pagination-num {
+    cursor: pointer;
+}
+
+.active-page {
+    color: deeppink;
+}

@@ -5,17 +5,19 @@ def get_shows():
     return data_manager.execute_select('SELECT id, title FROM shows;')
 
 
-def get_most_rated_shows():
+def get_most_rated_shows() -> dict:
     return data_manager.execute_select("""
-        SELECT shows.id, shows.title, shows.year, shows.runtime,
+        SELECT shows.id, shows.title, 
+        EXTRACT(YEAR FROM shows.year) AS year, 
+        shows.runtime,
         ROUND(shows.rating, 1) AS rating,
-        STRING_AGG(genres.name, ',') AS genres,
+        STRING_AGG(genres.name, ', ') AS genres,
         shows.trailer, shows.homepage FROM shows
-        INNER JOIN show_genres
+        LEFT JOIN show_genres
         ON shows.id = show_genres.show_id
-        INNER JOIN genres
+        LEFT JOIN genres
         ON show_genres.genre_id = genres.id
         GROUP BY shows.id
-        ORDER BY rating DESC
-        LIMIT 15;
+        ORDER BY rating DESC;
     """)
+
