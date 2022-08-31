@@ -54,3 +54,11 @@ def get_show(id):
        WHERE shows.id = {show_id}
        GROUP BY shows.id;
     """).format(show_id=sql.Literal(id)), fetchall=False)
+
+
+def get_seasons_of_show(show_id):
+    return data_manager.execute_select(sql.SQL("""
+        SELECT * 
+        FROM seasons
+        WHERE show_id = {show_id};
+    """).format(show_id=sql.Literal(show_id)))

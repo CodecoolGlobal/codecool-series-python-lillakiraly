@@ -30,7 +30,8 @@ def get_shows():
 @app.route('/show/<int:id>')
 def display_show(id):
     show_data = queries.get_show(id)
-    return render_template('show.html', show_data=show_data)
+    seasons = queries.get_seasons_of_show(id)
+    return render_template('show.html', show_data=show_data, seasons=seasons)
 
 
 @app.route('/design')

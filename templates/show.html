@@ -25,4 +25,25 @@
             <p><b>Actors: </b>{{ show_data['actors'] }}</p>
         </div>
     </div>
+    <div class="card show-seasons">
+            <h2 class="text-center">Seasons</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Overview</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for season in seasons %}
+                        <tr>
+                            <td>{{ season['season_number'] }}</td>
+                            <td>{{ season['title'] }}</td>
+                            <td>{{ season['overview'] if season['overview'] else 'No description.'}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 {% endblock %}
