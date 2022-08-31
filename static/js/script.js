@@ -27,7 +27,10 @@ async function listNextShows(pageIndex, showsPerPage, sortBy='rating', ascOrDesc
         else {currentShow = showData[((pageIndex-1) * showsPerPage) + i];}
 
         let title = document.createElement('td')
-        title.textContent = currentShow.title;
+        let titleLink = document.createElement('a');
+        titleLink.setAttribute('href', `/show/${currentShow.id}`);
+        titleLink.textContent = currentShow.title;
+        title.append(titleLink);
 
         let year = document.createElement('td')
         year.textContent = currentShow.year;

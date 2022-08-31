@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block title %}{{ show_data['title'] }}{% endblock %}
+{% block content %}
+    <h1 class="title text-center">{{ show_data['title'] }}</h1>
+
+    <div class="card detailed-view">
+        <div class="row">
+            <div class="poster col col-third">
+                {% if show_data['trailer'] %}
+                    <div id="player"></div>
+                    <script src="../static/js/embed-youtube.js" defer></script>
+                {% else %}
+                    <p class="text-center">No available trailer</p>
+                {% endif %}
+            </div>
+            <div class="col col-twothird show-card" data-video-id="{{ show_data['trailer']}}">
+                <h2>{{ show_data['title'] }}</h2>
+                <h3>{{ show_data['rating'] }}☆</h3>
+                <p class="small grayed">{{ show_data['runtime'] }}<span class="separator">|</span>{{ show_data['genres'] }}<span
+                        class="separator">|</span>{{ show_data['year'] }}</p>
+                <p>{{ show_data['overview'] }}</p>
+            </div>
+        </div>
+        <div>
+            <p><b>Actors: </b>{{ show_data['actors'] }}</p>
+        </div>
+    </div>
+{% endblock %}

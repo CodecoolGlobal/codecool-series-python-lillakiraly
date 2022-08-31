@@ -27,9 +27,10 @@ def get_shows():
     return jsonify(show_data)
 
 
-@app.route('/shows/<int:id>')
+@app.route('/show/<int:id>')
 def display_show(id):
-    pass
+    show_data = queries.get_show(id)
+    return render_template('show.html', show_data=show_data)
 
 
 @app.route('/design')
