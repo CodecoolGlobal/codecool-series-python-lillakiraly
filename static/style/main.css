@@ -10,3 +10,11 @@
 .active-page {
     color: deeppink;
 }
+
+.card th button {
+    color: white;
+}
+
+.card th {
+    cursor: pointer;
+}

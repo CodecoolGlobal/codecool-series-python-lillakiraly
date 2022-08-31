@@ -6,13 +6,57 @@
         <table>
             <thead>
                 <tr>
-                    <td>Title</td>
-                    <td>Year</td>
-                    <td>Runtime (min)</td>
-                    <td>Rating</td>
-                    <td>Genres</td>
-                    <td>Trailer</td>
-                    <td>Homepage</td>
+                    <th data-order="DESC" data-col="title">Title
+                        <form>
+                            <input type="hidden" class="column" value="title">
+                            <input type="hidden" class="desc-or-asc" value="DESC">
+                            <button type="submit">⇩</button>
+                        </form>
+                        <form>
+                            <input type="hidden" class="column" value="title">
+                            <input type="hidden" class="desc-or-asc" value="ASC">
+                            <button type="submit">⇧</button>
+                        </form>
+                    </th>
+                    <th data-order="DESC" data-col="year">Year
+                        <form>
+                            <input type="hidden" class="column" value="year">
+                            <input type="hidden" class="desc-or-asc" value="DESC">
+                            <button type="submit">⇩</button>
+                        </form>
+                        <form>
+                            <input type="hidden" class="column" value="year">
+                            <input type="hidden" class="desc-or-asc" value="ASC">
+                            <button type="submit">⇧</button>
+                        </form>
+                    </th>
+                    <th data-order="DESC" data-col="runtime">Runtime (min)
+                        <form>
+                            <input type="hidden" class="column" value="runtime">
+                            <input type="hidden" class="desc-or-asc" value="DESC">
+                            <button type="submit">⇩</button>
+                        </form>
+                        <form>
+                            <input type="hidden" class="column" value="runtime">
+                            <input type="hidden" class="desc-or-asc" value="ASC">
+                            <button type="submit">⇧</button>
+                        </form>
+                    </th>
+                    <th data-order="DESC" data-col="rating">Rating
+                        <form>
+                            <input type="hidden" class="column" value="rating">
+                            <input type="hidden" class="desc-or-asc" value="DESC">
+                            <button type="submit">⇩</button>
+                        </form>
+                        <form>
+                            <input type="hidden" class="column" value="rating">
+                            <input type="hidden" class="desc-or-asc" value="ASC">
+                            <button type="submit">⇧</button>
+                        </form>
+                    </th>
+                    <th>Genres</th>
+                    <th>Trailer</th>
+                    <th>Homepage</th>
                 </tr>
             </thead>
             <tbody>

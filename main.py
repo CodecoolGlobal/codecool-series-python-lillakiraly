@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, jsonify
+from flask import Flask, render_template, url_for, jsonify, request
 from data import queries
 import math
 from dotenv import load_dotenv
@@ -13,13 +13,17 @@ def index():
 
 
 @app.route("/shows/most-rated")
+@app.route("/shows")
 def most_rated_shows():
     return render_template('most-rated.html')
 
 
-@app.route('/api/get_shows')
+@app.route('/api/get_shows', methods=['POST'])
 def get_shows():
-    show_data = queries.get_most_rated_shows()
+    json_data = request.get_json()
+    sort_by = json_data.get('column')
+    order = json_data.get('order')
+    show_data = queries.get_most_rated_shows(sort_by, order)
     return jsonify(show_data)
 
 

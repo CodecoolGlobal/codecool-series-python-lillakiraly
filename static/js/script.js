@@ -2,12 +2,21 @@ let pageIndex = 1;
 const SHOWS_PER_PAGE = 15;
 
 
-function getAllShowData(){
-    return fetch('/api/get_shows').then(res => res.json())
+function getAllShowData(sortBy='rating', ascOrDesc='DESC'){
+    return fetch('/api/get_shows', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            column: sortBy,
+            order: ascOrDesc
+        })}).then(res => res.json())
 }
 
-async function listNextShows(pageIndex, showsPerPage){
-    let showData = await getAllShowData();
+async function listNextShows(pageIndex, showsPerPage, sortBy='rating', ascOrDesc='DESC'){
+    let showData = await getAllShowData(sortBy, ascOrDesc);
+    console.log(showData)
     let tbody = document.querySelector('tbody');
     tbody.innerHTML = "";
     for (let i = 0; i < 15; i++) {
@@ -50,16 +59,16 @@ async function listNextShows(pageIndex, showsPerPage){
 
         tbody.append(tableRow);
         tableRow.append(title, year, runtime, rating, genres, trailer, homepage);
-
     }
 }
 
 
-async function loadPageNavigation(showsPerPage) {
-    let showData = await getAllShowData();
+async function loadPageNavigation(showsPerPage, sortBy='rating', ascOrDesc='DESC') {
+    let showData = await getAllShowData(sortBy, ascOrDesc);
     let numOfShows = showData.length;
 
     let pageNav = document.querySelector('.show-pagination');
+    pageNav.innerHTML = "";
 
     for (let i = 1; i < (numOfShows/showsPerPage); i++) {
         let newPageNavNum = document.createElement('a');
@@ -69,7 +78,7 @@ async function loadPageNavigation(showsPerPage) {
         pageNav.appendChild(newPageNavNum);
         let currentPage = newPageNavNum.dataset.pageNum;
         newPageNavNum.addEventListener('click', async e => {
-            await listNextShows(currentPage, showsPerPage);
+            await listNextShows(currentPage, showsPerPage, sortBy, ascOrDesc);
             highlightCurrentPageNum(newPageNavNum);
         })
     }
@@ -81,6 +90,30 @@ function highlightCurrentPageNum(activePageNum) {
     pageNumbers.forEach(pageNumber => pageNumber.classList.remove('active-page'));
     activePageNum.classList.add('active-page');
 }
+
+
+let sortByForms = document.querySelectorAll('th form');
+for (let sortByForm of sortByForms) {
+    sortByForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let showOrderByCol = sortByForm.querySelector('.column').value;
+        let ascOrDescOrder = sortByForm.querySelector('.desc-or-asc').value;
+        listNextShows(pageIndex, SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+        loadPageNavigation(SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+    })
+}
+
+let colHeaders = document.querySelectorAll('.card th');
+for (let theader of colHeaders) {
+    theader.addEventListener('click', () => {
+        let showOrderByCol = theader.dataset.col;
+        let ascOrDescOrder = theader.dataset.order;
+        theader.data
+        listNextShows(pageIndex, SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+        loadPageNavigation(SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+    })
+}
+// TODO th-ra való kattintás nem :(
 
 loadPageNavigation(SHOWS_PER_PAGE);
 listNextShows(pageIndex, SHOWS_PER_PAGE);
