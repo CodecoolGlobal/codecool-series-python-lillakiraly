@@ -17,7 +17,7 @@ function getAllShowData(sortBy='rating', ascOrDesc='DESC'){
 async function listNextShows(pageIndex, showsPerPage, sortBy='rating', ascOrDesc='DESC'){
     let showData = await getAllShowData(sortBy, ascOrDesc);
     console.log(showData)
-    let tbody = document.querySelector('tbody');
+    let tbody = document.querySelector('.list-shows tbody');
     tbody.innerHTML = "";
     for (let i = 0; i < 15; i++) {
         let tableRow = document.createElement('tr');
@@ -95,28 +95,27 @@ function highlightCurrentPageNum(activePageNum) {
 }
 
 
-let sortByForms = document.querySelectorAll('th form');
-for (let sortByForm of sortByForms) {
+let colHeaders = document.querySelectorAll('.list-shows th');
+for (let header of colHeaders) {
+    let sortByForms = header.querySelectorAll('form');
+    sortByForms.forEach(sortByForm =>
     sortByForm.addEventListener('submit', (e) => {
         e.preventDefault();
         let showOrderByCol = sortByForm.querySelector('.column').value;
         let ascOrDescOrder = sortByForm.querySelector('.desc-or-asc').value;
         listNextShows(pageIndex, SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
         loadPageNavigation(SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+        header.dataset.order = ascOrDescOrder === 'ASC' ? 'DESC' : 'ASC';
+    }))
+    header.addEventListener('click', () => {
+        let showOrderByCol = header.dataset.col;
+        let ascOrDescOrder = header.dataset.order;
+        listNextShows(pageIndex, SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+        loadPageNavigation(SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
+        header.dataset.order = ascOrDescOrder === 'ASC' ? 'DESC' : 'ASC';
     })
 }
 
-let colHeaders = document.querySelectorAll('.card th');
-for (let theader of colHeaders) {
-    theader.addEventListener('click', () => {
-        let showOrderByCol = theader.dataset.col;
-        let ascOrDescOrder = theader.dataset.order;
-        theader.data
-        listNextShows(pageIndex, SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
-        loadPageNavigation(SHOWS_PER_PAGE, showOrderByCol, ascOrDescOrder);
-    })
-}
-// TODO th-ra való kattintás nem :(
 
 loadPageNavigation(SHOWS_PER_PAGE);
 listNextShows(pageIndex, SHOWS_PER_PAGE);
