@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block title %}Action shows{% endblock %}
+
+{% block main %}
+<h1 class="title text-center">Action shows</h1>
+    <div class="card">
+        <table id="actors">
+            <thead>
+                <tr>
+                    <th>Actor name</th>
+                    <th>Number of characters</th>
+                    <th>Is alive?</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <table id="shows">
+            <thead>
+            <tr>
+                <th>Show title</th>
+                <th>Show age</th>
+                <th>Number of seasons</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for show in action_shows %}
+                <tr data-show-id="{{ show['id'] }}">
+                    <td>{{ show['title'] }}</td>
+                    <td>{{ show['show_age'] }}</td>
+                    <td>{{ show['season_num'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

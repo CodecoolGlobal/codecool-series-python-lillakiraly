@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, jsonify
 from data import queries
 import math
 from dotenv import load_dotenv
@@ -11,6 +11,19 @@ def index():
     shows = queries.get_shows()
     return render_template('index.html', shows=shows)
 
+#SQL + JINJA: Action shows, more than 3 characters, display: title, age of the show, number of sesasons
+#SQL + fetch: actors display: name, number of characters, + before name if died alrdy
+@app.route('/action-shows')
+def action_shows():
+    shows = queries.get_action_shows()
+    return render_template('action-shows.html', action_shows=shows)
+
+
+@app.route('/api/actors')
+def get_actors():
+    show_id = int(request.args.get('show_id'))
+    actors = queries.get_actors_by_show_id(show_id)
+    return jsonify(actors)
 
 @app.route('/design')
 def design():
@@ -18,7 +31,8 @@ def design():
 
 
 def main():
-    app.run(debug=False)
+    app.run(debug=True,
+            port=8888)
 
 
 if __name__ == '__main__':
